@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="text-h6">404 - 页面未找到</div>
+    <div>占位页面</div>
   </q-page>
 </template>
 

@@ -1,20 +1,24 @@
-import MainLayout from 'layouts/MainLayout.vue'
-import IndexPage from 'pages/IndexPage.vue'
-import ScanPage from 'pages/ScanPage.vue'
-import EmptyPage from 'pages/EmptyPage.vue'
-import ErrorNotFound from 'pages/ErrorNotFound.vue'
-
 const routes = [
   {
     path: '/',
-    component: MainLayout,
+    component: () => import('layouts/MainLayout.vue'), // 动态导入 MainLayout
     children: [
-      { path: '', component: IndexPage },
-      { path: 'scan', component: ScanPage },
-      { path: 'empty', component: EmptyPage },
+      { path: '', component: () => import('pages/IndexPage.vue') }, // 首页
+      { path: 'scan', component: () => import('pages/ScanPage.vue') }, // 扫描页
+      { path: 'empty', component: () => import('pages/EmptyPage.vue') }, // 空白页
+      {
+        path: 'camera',
+        name: 'camera',
+        component: () => import('pages/CameraPage.vue'), // ✅ 后置摄像头页面
+      },
     ],
   },
-  { path: '/:catchAll(.*)*', component: ErrorNotFound },
+
+  // 始终放最后的 404 页面
+  {
+    path: '/:catchAll(.*)*',
+    component: () => import('pages/ErrorNotFound.vue'),
+  },
 ]
 
 export default routes
